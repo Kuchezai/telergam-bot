@@ -66,7 +66,8 @@ func (b *TelegramBot) getUpdates(offset int) ([]update, error) {
 }
 
 func (b *TelegramBot) sendMessage(msg entity.Response) {
-	body, err := json.Marshal(msg)
+	rspn := responseWithJsonTags(msg)
+	body, err := json.Marshal(rspn)
 	if err != nil {
 		log.Printf("Error marshaling message: %v", err)
 		return
@@ -88,4 +89,10 @@ type update struct {
 
 type getUpdatesResult struct {
 	Updates []update `json:"result"`
+}
+
+type responseWithJsonTags struct {
+	ChatID      int         `json:"chat_id"`
+	Text        string      `json:"text"`
+	ReplyMarkup interface{} `json:"reply_markup,omitempty"`
 }

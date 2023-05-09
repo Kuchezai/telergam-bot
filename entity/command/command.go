@@ -2,6 +2,8 @@ package command
 
 type Command string
 
+// all available bot commands
+
 const (
 	ToMain               Command = "В меню"
 	InfoAboutUser        Command = "Информация о пользователе"

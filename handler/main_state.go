@@ -5,6 +5,7 @@ import (
 	"strings"
 	"telegram-bot/entity"
 	"telegram-bot/entity/command"
+	"telegram-bot/entity/state"
 	"telegram-bot/handler/helpers"
 	"telegram-bot/usecase"
 )
@@ -20,7 +21,7 @@ func NewMainStateHandler(su *usecase.StateRouterUsecase, ru *usecase.RequestUsec
 }
 
 func (h *MainStateHandler) GoToGetUser(chatID int, msg string) entity.Response {
-	h.su.ChangeChatState(chatID, entity.GetUser)
+	h.su.ChangeChatState(chatID, state.GetUser)
 
 	textMsg := "Пожалуйста, введите ID пользователя VK или выберите следующее действие"
 
@@ -28,7 +29,7 @@ func (h *MainStateHandler) GoToGetUser(chatID int, msg string) entity.Response {
 }
 
 func (h *MainStateHandler) GoToGetUserFriends(chatID int, msg string) entity.Response {
-	h.su.ChangeChatState(chatID, entity.GetUserFriends)
+	h.su.ChangeChatState(chatID, state.GetUserFriends)
 
 	textMsg := "Пожалуйста, введите ID пользователя VK или выберите следующее действие"
 
@@ -36,7 +37,7 @@ func (h *MainStateHandler) GoToGetUserFriends(chatID int, msg string) entity.Res
 }
 
 func (h *MainStateHandler) GoToGetRequestHistory(chatID int, msg string) entity.Response {
-	h.su.ChangeChatState(chatID, entity.GetHistory)
+	h.su.ChangeChatState(chatID, state.GetHistory)
 	requests, err := h.ru.GetChatRequests(chatID)
 	if err != nil {
 		return entity.Response{}
@@ -54,7 +55,7 @@ func (h *MainStateHandler) GoToGetRequestHistory(chatID int, msg string) entity.
 }
 
 func (h *MainStateHandler) GoToGetInfAboutAuthor(chatID int, msg string) entity.Response {
-	h.su.ChangeChatState(chatID, entity.GetInfoAboutAuthor)
+	h.su.ChangeChatState(chatID, state.GetInfoAboutAuthor)
 	info, err := h.au.GetInfoAboutAuthor(chatID)
 	if err != nil {
 		return entity.Response{}

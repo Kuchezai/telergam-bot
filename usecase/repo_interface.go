@@ -1,6 +1,9 @@
 package usecase
 
-import "telegram-bot/entity"
+import (
+	"telegram-bot/entity"
+	"telegram-bot/entity/state"
+)
 
 type RequestsAdderRepo interface {
 	AddInHistory(entity.Request) error
@@ -17,5 +20,5 @@ type UserRepo interface {
 }
 
 type StateChangerRepo interface {
-	ChangeChatState(chatID int, newState entity.State) error
+	ChangeChatState(chatID int, newState state.State) error
 }

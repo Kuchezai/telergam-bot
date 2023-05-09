@@ -2,6 +2,7 @@ package handler
 
 import (
 	"telegram-bot/entity"
+	"telegram-bot/entity/state"
 	"telegram-bot/usecase"
 )
 
@@ -14,7 +15,7 @@ func NewEntryStateHandler(su *usecase.StateRouterUsecase) *EntryStateHandler {
 }
 
 func (h *EntryStateHandler) GoToMain(chatID int, msg string) entity.Response {
-	h.su.ChangeChatState(chatID, entity.Main)
+	h.su.ChangeChatState(chatID, state.Main)
 	message := entity.Response{
 		ChatID: chatID,
 		Text:   "Пожалуйста, выберите действие:",
@@ -37,7 +38,7 @@ func (h *EntryStateHandler) GoToMain(chatID int, msg string) entity.Response {
 }
 
 func (h *EntryStateHandler) RestartBot(chatID int, msg string) entity.Response {
-	h.su.ChangeChatState(chatID, entity.EntryPoint)
+	h.su.ChangeChatState(chatID, state.EntryPoint)
 	message := entity.Response{
 		ChatID: chatID,
 		Text:   "Добро пожаловать!:",

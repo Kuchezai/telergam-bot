@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 	"telegram-bot/entity"
+	"telegram-bot/entity/command"
 	"telegram-bot/handler/helpers"
 	"telegram-bot/usecase"
 )
@@ -60,5 +61,5 @@ func (h *MainStateHandler) GoToGetInfAboutAuthor(chatID int, msg string) entity.
 	}
 	textMsg := fmt.Sprintln(info, "\n\nВыберите следующее действие")
 
-	return helpers.CreateResponseWithTwoButton(chatID, textMsg, entity.ToMain, entity.InfoGitHub)
+	return helpers.CreateResponseWithTwoButton(chatID, textMsg, command.ToMain, command.InfoGitHub)
 }

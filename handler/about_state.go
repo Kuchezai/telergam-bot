@@ -3,6 +3,7 @@ package handler
 import (
 	"fmt"
 	"telegram-bot/entity"
+	"telegram-bot/entity/command"
 	"telegram-bot/handler/helpers"
 	"telegram-bot/usecase"
 )
@@ -22,5 +23,5 @@ func (h *AboutBotHandler) GetAuthorGitHub(chatID int, msg string) entity.Respons
 	}
 	textMsg := fmt.Sprintln(gitHub, "\n\nВыберите следующее действие")
 
-	return helpers.CreateResponseWithTwoButton(chatID, textMsg, entity.ToMain, entity.InfoGitHub)
+	return helpers.CreateResponseWithTwoButton(chatID, textMsg, command.ToMain, command.InfoGitHub)
 }

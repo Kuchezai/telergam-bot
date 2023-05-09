@@ -1,4 +1,4 @@
-package entity
+package command
 
 type Command string
 

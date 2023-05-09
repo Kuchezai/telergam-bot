@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"telegram-bot/entity"
+	"telegram-bot/entity/command"
 	"time"
 )
 
@@ -15,7 +16,7 @@ func NewRequestUsecase(rr RequestRepo, sr StateChangerRepo) *RequestUsecase {
 }
 
 func (r *RequestUsecase) GetChatRequests(chatID int) ([]entity.Request, error) {
-	r.requestRepo.AddInHistory(entity.Request{ChatID: chatID, Command: entity.RequestHistory, Time: time.Now()})
+	r.requestRepo.AddInHistory(entity.Request{chatID, command.RequestHistory, time.Now()})
 	return r.requestRepo.GetChatHistory(chatID)
 }
 

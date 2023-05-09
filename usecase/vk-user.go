@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"telegram-bot/entity"
+	"telegram-bot/entity/command"
 	"time"
 )
 
@@ -16,7 +17,7 @@ func NewVKUserUsecase(ur UserRepo, rr RequestsAdderRepo, sr StateChangerRepo) *V
 }
 
 func (u *VKUserUsecase) GetUser(userID int, chatID int) (entity.User, error) {
-	u.requestRepo.AddInHistory(entity.Request{ChatID: chatID, Command: entity.InfoAboutUser, Time: time.Now()})
+	u.requestRepo.AddInHistory(entity.Request{chatID, command.InfoAboutUser, time.Now()})
 	return u.userRepo.User(userID)
 }
 func (u *VKUserUsecase) GetInfoAboutGetUser() string {
@@ -24,7 +25,7 @@ func (u *VKUserUsecase) GetInfoAboutGetUser() string {
 }
 
 func (u *VKUserUsecase) GetUserFriends(userID int, chatID int) ([]entity.User, error) {
-	u.requestRepo.AddInHistory(entity.Request{ChatID: chatID, Command: entity.InfoAboutUserFriends, Time: time.Now()})
+	u.requestRepo.AddInHistory(entity.Request{chatID, command.InfoAboutUserFriends, time.Now()})
 	return u.userRepo.FriendsByID(userID)
 }
 

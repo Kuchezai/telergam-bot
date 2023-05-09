@@ -1,9 +1,13 @@
 package entity
 
-import "time"
+import (
+	"time"
+
+	"telegram-bot/entity/command"
+)
 
 type Request struct {
 	ChatID  int
-	Command Command
+	Command command.Command
 	Time    time.Time
 }

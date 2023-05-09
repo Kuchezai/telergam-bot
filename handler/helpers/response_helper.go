@@ -1,8 +1,11 @@
 package helpers
 
-import "telegram-bot/entity"
+import (
+	"telegram-bot/entity"
+	"telegram-bot/entity/command"
+)
 
-func CreateResponseWithTwoButton(chatID int, text string, buttonOneText, buttonTwoText entity.Command) entity.Response {
+func CreateResponseWithTwoButton(chatID int, text string, buttonOneText, buttonTwoText command.Command) entity.Response {
 	replyMarkup := map[string]interface{}{
 		"keyboard": [][]map[string]interface{}{
 			{
@@ -23,5 +26,5 @@ func CreateResponseWithTwoButton(chatID int, text string, buttonOneText, buttonT
 }
 
 func CreateResponseWithMainAndInfoButton(chatID int, text string) entity.Response {
-	return CreateResponseWithTwoButton(chatID, text, entity.ToMain, entity.InfoAboutCommand)
+	return CreateResponseWithTwoButton(chatID, text, command.ToMain, command.InfoAboutCommand)
 }

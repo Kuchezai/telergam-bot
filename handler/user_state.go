@@ -72,7 +72,7 @@ func (h *UserHandler) GetUserFriends(chatID int, msg string) entity.Response {
 	}
 
 	if len(friends) == 0 {
-		helpers.ResponseWithMainInfoBtnAndChoicePrompt(chatID, msgtxt.FriendsNotFound)
+		return helpers.ResponseWithMainInfoBtnAndChoicePrompt(chatID, msgtxt.FriendsNotFound)
 	}
 
 	var sb strings.Builder

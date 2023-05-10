@@ -22,7 +22,7 @@ func (h *AboutBotHandler) GetAuthorGitHub(chatID int, msg string) entity.Respons
 	if err != nil {
 		return entity.Response{}
 	}
-	textMsg := fmt.Sprintf(gitHub, "\n\n", msgtxt.ChooseNextAction)
+	textMsg := fmt.Sprint(gitHub, "\n\n", msgtxt.ChooseNextAction)
 
 	return helpers.ResponseWithTwoBtn(chatID, textMsg, command.ToMain, command.InfoGitHub)
 }

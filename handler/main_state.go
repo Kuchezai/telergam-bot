@@ -55,6 +55,6 @@ func (h *MainStateHandler) GoToGetInfAboutAuthor(chatID int, msg string) entity.
 	if err != nil {
 		return entity.Response{}
 	}
-	textMsg := fmt.Sprintln(info, "\n", msgtxt.ChooseNextAction)
+	textMsg := fmt.Sprint(info, "\n\n", msgtxt.ChooseNextAction)
 	return helpers.ResponseWithTwoBtn(chatID, textMsg, command.ToMain, command.InfoGitHub)
 }

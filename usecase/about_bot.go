@@ -3,6 +3,7 @@ package usecase
 import (
 	"telegram-bot/entity"
 	"telegram-bot/entity/command"
+	"telegram-bot/entity/msgtxt"
 	"time"
 )
 
@@ -17,9 +18,9 @@ func NewAboutBotUsecase(rp RequestsAdderRepo, sr StateChangerRepo) *AboutBotUsec
 
 func (a *AboutBotUsecase) GetInfoAboutAuthor(chatID int) (string, error) {
 	a.requestRepo.AddInHistory(entity.Request{chatID, command.InfoAboutAuthor, time.Now()})
-	return "Kuchezai", nil
+	return msgtxt.AboutAuthor, nil
 }
 
 func (a *AboutBotUsecase) GetAuthorGitHub(chatID int) (string, error) {
-	return "https://github.com/Kuchezai", nil
+	return msgtxt.GitHubLink, nil
 }

@@ -5,6 +5,7 @@ import (
 	"strings"
 	"telegram-bot/entity"
 	"telegram-bot/entity/command"
+	"telegram-bot/entity/msgtxt"
 	"telegram-bot/entity/state"
 	"telegram-bot/handler/helpers"
 	"telegram-bot/usecase"
@@ -23,17 +24,13 @@ func NewMainStateHandler(su *usecase.StateRouterUsecase, ru *usecase.RequestUsec
 func (h *MainStateHandler) GoToGetUser(chatID int, msg string) entity.Response {
 	h.su.ChangeChatState(chatID, state.GetUser)
 
-	textMsg := "Пожалуйста, введите ID пользователя VK или выберите следующее действие"
-
-	return helpers.CreateResponseWithMainAndInfoButton(chatID, textMsg)
+	return helpers.ResponseWithMainInfoBtn(chatID, msgtxt.InputVKIDOrChooseNextAction)
 }
 
 func (h *MainStateHandler) GoToGetUserFriends(chatID int, msg string) entity.Response {
 	h.su.ChangeChatState(chatID, state.GetUserFriends)
 
-	textMsg := "Пожалуйста, введите ID пользователя VK или выберите следующее действие"
-
-	return helpers.CreateResponseWithMainAndInfoButton(chatID, textMsg)
+	return helpers.ResponseWithMainInfoBtn(chatID, msgtxt.InputVKIDOrChooseNextAction)
 }
 
 func (h *MainStateHandler) GoToGetRequestHistory(chatID int, msg string) entity.Response {
@@ -44,14 +41,12 @@ func (h *MainStateHandler) GoToGetRequestHistory(chatID int, msg string) entity.
 	}
 
 	var sb strings.Builder
-	sb.WriteString("История запросов:\n")
+	sb.WriteString(msgtxt.RequestHistory + "\n")
 	for i, req := range requests {
 		sb.WriteString(fmt.Sprintf("%d. %s (%s)\n", i+1, req.Command, req.Time.Format("2006-01-02 15:04:05")))
 	}
 
-	sb.WriteString("\n\nВыберите следующее действие")
-
-	return helpers.CreateResponseWithMainAndInfoButton(chatID, sb.String())
+	return helpers.ResponseWithMainInfoBtnAndChoicePrompt(chatID, sb.String())
 }
 
 func (h *MainStateHandler) GoToGetInfAboutAuthor(chatID int, msg string) entity.Response {
@@ -60,7 +55,6 @@ func (h *MainStateHandler) GoToGetInfAboutAuthor(chatID int, msg string) entity.
 	if err != nil {
 		return entity.Response{}
 	}
-	textMsg := fmt.Sprintln(info, "\n\nВыберите следующее действие")
-
-	return helpers.CreateResponseWithTwoButton(chatID, textMsg, command.ToMain, command.InfoGitHub)
+	textMsg := fmt.Sprintln(info, "\n", msgtxt.ChooseNextAction)
+	return helpers.ResponseWithTwoBtn(chatID, textMsg, command.ToMain, command.InfoGitHub)
 }

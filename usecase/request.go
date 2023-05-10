@@ -3,6 +3,7 @@ package usecase
 import (
 	"telegram-bot/entity"
 	"telegram-bot/entity/command"
+	"telegram-bot/entity/msgtxt"
 	"time"
 )
 
@@ -21,5 +22,5 @@ func (r *RequestUsecase) GetChatRequests(chatID int) ([]entity.Request, error) {
 }
 
 func (r *RequestUsecase) GetInfoAboutGetChatRequests() string {
-	return "Это команда показывает Вашу историю запросов к этому боту"
+	return msgtxt.InfoAboutGetChatRequests
 }

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"telegram-bot/entity"
 	"telegram-bot/entity/command"
+	"telegram-bot/entity/msgtxt"
 	"telegram-bot/handler/helpers"
 	"telegram-bot/usecase"
 )
@@ -21,7 +22,7 @@ func (h *AboutBotHandler) GetAuthorGitHub(chatID int, msg string) entity.Respons
 	if err != nil {
 		return entity.Response{}
 	}
-	textMsg := fmt.Sprintln(gitHub, "\n\nВыберите следующее действие")
+	textMsg := fmt.Sprintf(gitHub, "\n\n", msgtxt.ChooseNextAction)
 
-	return helpers.CreateResponseWithTwoButton(chatID, textMsg, command.ToMain, command.InfoGitHub)
+	return helpers.ResponseWithTwoBtn(chatID, textMsg, command.ToMain, command.InfoGitHub)
 }

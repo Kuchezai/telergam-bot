@@ -3,14 +3,21 @@ package helpers
 import (
 	"telegram-bot/entity"
 	"telegram-bot/entity/command"
+	"telegram-bot/entity/msgtxt"
 )
 
-func CreateResponseWithTwoButton(chatID int, text string, buttonOneText, buttonTwoText command.Command) entity.Response {
+func ResponseWithText(chatID int, text string) entity.Response {
+	return entity.Response{
+		ChatID: chatID,
+		Text:   text,
+	}
+}
+
+func ResponseWithOneBtn(chatID int, text string, buttonText command.Command) entity.Response {
 	replyMarkup := map[string]interface{}{
 		"keyboard": [][]map[string]interface{}{
 			{
-				{"text": buttonOneText},
-				{"text": buttonTwoText},
+				{"text": buttonText},
 			},
 		},
 		"resize_keyboard": true,
@@ -25,6 +32,52 @@ func CreateResponseWithTwoButton(chatID int, text string, buttonOneText, buttonT
 	return response
 }
 
-func CreateResponseWithMainAndInfoButton(chatID int, text string) entity.Response {
-	return CreateResponseWithTwoButton(chatID, text, command.ToMain, command.InfoAboutCommand)
+func ResponseWithTwoBtn(chatID int, text string, btnOneText, btnTwoText command.Command) entity.Response {
+	replyMarkup := map[string]interface{}{
+		"keyboard": [][]map[string]interface{}{
+			{
+				{"text": btnOneText},
+				{"text": btnTwoText},
+			},
+		},
+		"resize_keyboard": true,
+	}
+	response := entity.Response{
+		ChatID:      chatID,
+		Text:        text,
+		ReplyMarkup: replyMarkup,
+	}
+
+	return response
+}
+
+func ResponseWithFourBtn(chatID int, text string, btnOneText, btnTwoText, btnThreeText, btnFourText command.Command) entity.Response {
+	replyMarkup := map[string]interface{}{
+		"keyboard": [][]map[string]interface{}{
+			{
+				{"text": btnOneText},
+				{"text": btnTwoText},
+			},
+			{
+				{"text": btnThreeText},
+				{"text": btnFourText},
+			},
+		},
+		"resize_keyboard": true,
+	}
+
+	response := entity.Response{
+		ChatID:      chatID,
+		Text:        text,
+		ReplyMarkup: replyMarkup,
+	}
+	return response
+}
+
+func ResponseWithMainInfoBtn(chatID int, text string) entity.Response {
+	return ResponseWithTwoBtn(chatID, text, command.ToMain, command.InfoAboutCommand)
+}
+
+func ResponseWithMainInfoBtnAndChoicePrompt(chatID int, text string) entity.Response {
+	return ResponseWithMainInfoBtn(chatID, text+"\n\n"+msgtxt.ChooseNextAction)
 }

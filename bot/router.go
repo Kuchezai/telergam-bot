@@ -6,7 +6,6 @@ import (
 	"telegram-bot/entity/command"
 	"telegram-bot/entity/state"
 	"telegram-bot/handler"
-	"telegram-bot/handler/helpers"
 )
 
 type StateInformerRepo interface {
@@ -18,10 +17,6 @@ type CommandHandler func(chatID int, msg string) entity.Response
 type Router struct {
 	handlers map[state.State]map[command.Command]CommandHandler
 	repo     StateInformerRepo
-}
-
-func restartBot(chatID int, msg string) entity.Response {
-	return helpers.CreateResponseWithTwoButton(chatID, "Добро пожаловать!", command.ToMain, command.ToMain)
 }
 
 func NewRouter(repo StateInformerRepo, aboutBotHandler *handler.AboutBotHandler, requestHandler *handler.RequestHandler,

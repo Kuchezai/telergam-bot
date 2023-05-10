@@ -13,6 +13,7 @@ import (
 const (
 	getUpdatesEndpoint  = "/getUpdates"
 	sendMessageEndpoint = "/sendMessage"
+	offsetParam         = "?offset="
 )
 
 type TelegramBot struct {
@@ -44,7 +45,7 @@ func (b *TelegramBot) AskAndServe() {
 func (b *TelegramBot) getUpdates(offset int) ([]update, error) {
 
 	u := b.apiURL + b.token + getUpdatesEndpoint
-	query := "?offset=" + strconv.Itoa(offset)
+	query := offsetParam + strconv.Itoa(offset)
 
 	resp, err := http.Get(u + query)
 	if err != nil {
@@ -75,7 +76,7 @@ func (b *TelegramBot) sendMessage(msg entity.Response) {
 	u := b.apiURL + b.token + sendMessageEndpoint
 	resp, err := http.Post(u, "application/json", bytes.NewBuffer(body))
 	if err != nil {
-		log.Printf("Error marshaling message: %v", err)
+		log.Printf("Error POST method: %v", err)
 		return
 	}
 

@@ -3,6 +3,7 @@ package usecase
 import (
 	"telegram-bot/entity"
 	"telegram-bot/entity/command"
+	"telegram-bot/entity/msgtxt"
 	"time"
 )
 
@@ -21,7 +22,7 @@ func (u *VKUserUsecase) GetUser(userID int, chatID int) (entity.User, error) {
 	return u.userRepo.User(userID)
 }
 func (u *VKUserUsecase) GetInfoAboutGetUser() string {
-	return "Это команда выводит имя и фамилию пользователя VK"
+	return msgtxt.InfoAboutGetUser
 }
 
 func (u *VKUserUsecase) GetUserFriends(userID int, chatID int) ([]entity.User, error) {
@@ -30,5 +31,5 @@ func (u *VKUserUsecase) GetUserFriends(userID int, chatID int) ([]entity.User, e
 }
 
 func (u *VKUserUsecase) GetInfoAboutGetUserFriends() string {
-	return "Это команда выводит 100 друзей публичных пользователей VK"
+	return msgtxt.InfoAboutGetUserFriends
 }

@@ -2,7 +2,10 @@ package handler
 
 import (
 	"telegram-bot/entity"
+	"telegram-bot/entity/command"
+	"telegram-bot/entity/msgtxt"
 	"telegram-bot/entity/state"
+	"telegram-bot/handler/helpers"
 	"telegram-bot/usecase"
 )
 
@@ -16,47 +19,17 @@ func NewEntryStateHandler(su *usecase.StateRouterUsecase) *EntryStateHandler {
 
 func (h *EntryStateHandler) GoToMain(chatID int, msg string) entity.Response {
 	h.su.ChangeChatState(chatID, state.Main)
-	message := entity.Response{
-		ChatID: chatID,
-		Text:   "Пожалуйста, выберите действие:",
-		ReplyMarkup: map[string]interface{}{
-			"keyboard": [][]map[string]interface{}{
-				{
-					{"text": "Информация о пользователе"},
-					{"text": "Информация о друзьях"},
-				},
-				{
-					{"text": "История запросов"},
-					{"text": "Информация об авторе"},
-				},
-			},
-			"resize_keyboard": true,
-		},
-	}
 
-	return message
+	return helpers.ResponseWithFourBtn(chatID, msgtxt.ChoseAction, command.InfoAboutUser,
+		command.InfoAboutUserFriends, command.RequestHistory, command.InfoAboutAuthor)
 }
 
 func (h *EntryStateHandler) RestartBot(chatID int, msg string) entity.Response {
 	h.su.ChangeChatState(chatID, state.EntryPoint)
-	message := entity.Response{
-		ChatID: chatID,
-		Text:   "Добро пожаловать!:",
-		ReplyMarkup: map[string]interface{}{
-			"keyboard": [][]map[string]interface{}{
-				{
-					{"text": "В меню"},
-				},
-			},
-			"resize_keyboard": true,
-		},
-	}
-	return message
+
+	return helpers.ResponseWithOneBtn(chatID, msgtxt.Welcome, command.ToMain)
 }
 
 func (h *EntryStateHandler) UnknownCommand(chatID int, msg string) entity.Response {
-	return entity.Response{
-		ChatID: chatID,
-		Text:   "Я не знаю такой команды",
-	}
+	return helpers.ResponseWithText(chatID, msgtxt.UnknownCommand)
 }
